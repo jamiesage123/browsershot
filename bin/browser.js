@@ -57,7 +57,15 @@ const callChrome = async pup => {
     let page;
     let output;
     let remoteInstance;
-    const puppet = (pup || require('puppeteer'));
+    const puppet = (pup || require('puppeteer-extra'));
+
+    // Add stealth plugin and use defaults
+    const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+    puppet.use(StealthPlugin());
+
+    // Add adblocker plugin to block all ads and trackers (saves bandwidth)
+    const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
+    puppet.use(AdblockerPlugin({ blockTrackers: true }));
 
     try {
         if (request.options.remoteInstanceUrl || request.options.browserWSEndpoint ) {
