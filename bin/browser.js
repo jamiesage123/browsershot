@@ -58,6 +58,7 @@ const callChrome = async pup => {
     let output;
     let remoteInstance;
     const puppet = (pup || require('puppeteer-extra'));
+    const { executablePath } = require('puppeteer');
 
     // Add stealth plugin and use defaults
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -91,7 +92,7 @@ const callChrome = async pup => {
         if (!browser) {
             browser = await puppet.launch({
                 ignoreHTTPSErrors: request.options.ignoreHttpsErrors,
-                executablePath: request.options.executablePath,
+                executablePath: request.options.executablePath || executablePath(),
                 args: request.options.args || [],
                 pipe: request.options.pipe || false,
                 env: {
